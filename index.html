@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width , initial-scale=1.0">
+        <title>Calculator</title>
+        <link rel="stylesheet" type="text/css" href="./style.css"></style>
+    </head>
+    <body>
+        <header>Simple Calculator</header>
+
+        <h1>Your quick and easy solution for basic arithmetic calculations</h1>
+
+        <div class="calculator">
+            <div class="display" id="display">0</div>
+            <div>
+                <button class="btn" onclick="appendDigit('7')">7</button>
+                <button class="btn" onclick="appendDigit('8')">8</button>
+                <button class="btn" onclick="appendDigit('9')">9</button>
+                <button class="btn" onclick="setOperation('+')">+</button>
+            </div>
+            <div>
+                <button class="btn" onclick="appendDigit('4')">4</button>
+                <button class="btn" onclick="appendDigit('5')">5</button>
+                <button class="btn" onclick="appendDigit('6')">6</button>
+                <button class="btn" onclick="setOperation('-')">-</button>
+            </div>
+            <div>
+                <button class="btn" onclick="appendDigit('1')">1</button>
+                <button class="btn" onclick="appendDigit('2')">2</button>
+                <button class="btn" onclick="appendDigit('3')">3</button>
+                <button class="btn" onclick="appendDigit('*')">*</button>
+            </div>
+            <div>
+                <button class="btn" onclick="appendDigit('0')">0</button>
+                <button class="btn" onclick="appendDecimal()">.</button>
+                <button class="btn" onclick="clearDisplay()">C</button>
+                <button class="btn" onclick="setOperation('/')">/</button>
+            </div>
+            <div>
+                <button class="btn1" onclick="calculate()">=</button>
+            </div>
+        </div>
+        <script src="./script.js"></script>
+        <footer>
+            <p>Created as a part of a <a href="https://www.theodinproject.com/" target="_blank">The Odin Project</a> Curriculum </p>
+            <p> &copy; 2024 Dhiraj Kate. All rights reserved.</p>
+        </footer>
+
+    </body>
+</html>
