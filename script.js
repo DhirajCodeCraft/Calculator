@@ -4,8 +4,8 @@ let previousNumber = '';
 let operation = '';
 let shouldResetDisplay = false;
 
-function updateDisplay(value) {
-    display.innerText = value;
+function updateDisplay() {
+    display.innerText = currentNumber;
 }
 
 function appendDigit(digit) {
@@ -19,7 +19,7 @@ function appendDigit(digit) {
             currentNumber += digit;
         }
     }
-    updateDisplay(currentNumber);
+    updateDisplay();
 }
 
 function appendDecimal() {
@@ -29,42 +29,46 @@ function appendDecimal() {
     } else if (!currentNumber.includes('.')) {
         currentNumber += '.';
     }
-    updateDisplay(currentNumber);
+    updateDisplay();
 }
 
 function setOperation(op) {
-    if (operation && !shouldResetDisplay) {
+    if (previousNumber !== '' && !shouldResetDisplay) {
         calculate();
     }
     operation = op;
     previousNumber = currentNumber;
-    shouldResetDisplay = true;
-    updateDisplay(previousNumber + " " + operation);
+    currentNumber = '0';
+    shouldResetDisplay = false;
+    updateDisplay();
 }
 
 function calculate() {
     let result;
+    let prev = parseFloat(previousNumber);
+    let curr = parseFloat(currentNumber);
+
     switch (operation) {
         case '+':
-            result = parseFloat(previousNumber) + parseFloat(currentNumber);
+            result = prev + curr;
             break;
         case '-':
-            result = parseFloat(previousNumber) - parseFloat(currentNumber);
+            result = prev - curr;
             break;
         case '*':
-            result = parseFloat(previousNumber) * parseFloat(currentNumber);
+            result = prev * curr;
             break;
         case '/':
-            result = parseFloat(previousNumber) / parseFloat(currentNumber);
+            result = prev / curr;
             break;
         default:
             result = 'Error';
     }
     currentNumber = result.toString();
-    operation = '';
     previousNumber = '';
+    operation = '';
     shouldResetDisplay = true;
-    updateDisplay(currentNumber);
+    updateDisplay();
 }
 
 function clearDisplay() {
@@ -72,5 +76,33 @@ function clearDisplay() {
     previousNumber = '';
     operation = '';
     shouldResetDisplay = false;
-    updateDisplay(currentNumber);
+    updateDisplay();
 }
+
+function calculatePercentage() {
+    let curr = parseFloat(currentNumber);
+    if (operation === '*' || operation === '/') {
+        currentNumber = (curr / 100).toString();
+    } else if (operation === '+' || operation === '-') {
+        let prev = parseFloat(previousNumber);
+        currentNumber = ((prev * curr) / 100).toString();
+    }
+    shouldResetDisplay = true;
+    updateDisplay();
+}
+
+function handleEqual() {
+    calculate();
+}
+
+document.getElementById('clear').addEventListener('click', clearDisplay);
+document.getElementById('equals').addEventListener('click', handleEqual);
+document.getElementById('percent').addEventListener('click', calculatePercentage);
+
+document.querySelectorAll('.digit').forEach(button => {
+    button.addEventListener('click', (e) => appendDigit(e.target.innerText));
+});
+
+document.querySelectorAll('.operation').forEach(button => {
+    button.addEventListener('click', (e) => setOperation(e.target.innerText));
+});
